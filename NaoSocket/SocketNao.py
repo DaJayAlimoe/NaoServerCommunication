@@ -19,15 +19,18 @@ conn, addr = s.accept()
 
 print 'Connection address:', addr
 while 1:
-    data = conn.recv(BUFFER_SIZE)
-    if not data: break
+    server_data = conn.recv(BUFFER_SIZE)
+    if not server_data:
+        break
     print "received data from Nao: ",
-    nao_data = ast.literal_eval(data)
-    wsClient = WsClient.WsClient("ws://localhost:8080/NaoServer/"++EndPoints[nao_data['mode']])
-#     TODO ws client aufruf
-    data_from_ws = wsClient.send(nao_data['message'])
-    print "received data from wsClient: ", data_from_ws
+    server_data = ast.literal_eval(server_data)
+    if server_data['mode']:
+        wsClient = WsClient.WsClient("ws://localhost:8080/NaoServer/"++EndPoints[server_data['mode']])
+        if server_data['message']:
+            nao_data = wsClient.send(server_data['message'])
+            if nao_data:
+                conn.send(nao_data)
+                print "received data from wsClient: ", nao_data
 #     send to Nao
-    conn.send(data_from_ws)  # echo
-    
+#    conn.send(nao_data)  # echo
 conn.close()
