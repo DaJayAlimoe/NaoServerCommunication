@@ -28,9 +28,7 @@ while 1:
         wsClient = WsClient.WsClient("ws://localhost:8080/NaoServer/"++EndPoints[server_data['mode']])
         if server_data['message']:
             nao_data = wsClient.send(server_data['message'])
-            if nao_data:
-                conn.send(nao_data)
+            if nao_data and nao_data['to_speech']:
+                conn.send(nao_data['to_speech'])
                 print "received data from wsClient: ", nao_data
-#     send to Nao
-#    conn.send(nao_data)  # echo
 conn.close()
