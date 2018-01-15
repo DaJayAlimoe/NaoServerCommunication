@@ -8,7 +8,7 @@ import WsClient
 import ast
 import MusicRecognizer
 
-EndPoints = {'reminder' : 'websocketErinnerung', 'music' : 'websocketMusikErkennung', 'patient' : 'websocketPatient'}
+EndPoints = {'reminder' : 'websocketErinnerung', 'patient' : 'websocketPatient'}
 TCP_IP = '127.0.0.1'
 TCP_PORT = 5550
 BUFFER_SIZE = 25  # Normally 1024, but we want fast response
